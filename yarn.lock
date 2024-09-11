@@ -1346,6 +1346,11 @@ wrap-ansi@^8.1.0:
     string-width "^5.0.1"
     strip-ansi "^7.0.1"
 
+wretch@^2.9.1:
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/wretch/-/wretch-2.9.1.tgz#7c062bfcd3bd46b9c9493951e09301eb8f9ec130"
+  integrity sha512-ov2i8UkrqHy2DCJq5/Vr4YYRR2rdgGjx/FlL9TciCoo2o2Ksv0d1fJ949ZnmFedA/Wxm/YoQiNElpw9sVRCt1w==
+
 yaml@^2.3.4:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.5.1.tgz#c9772aacf62cb7494a95b0c4f1fb065b563db130"

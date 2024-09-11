@@ -1,14 +1,16 @@
 import express from 'express';
 import { Request, Response } from 'express';
-// import routes from './routes';
+import userAPI from './routes/user';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
-// app.use('/', routes);
+
+app.use('/user', userAPI);
+
 app.get('/', (req, res)=>{
-  res.send("hello api")
+  res.json({message: "hello api"})
 })
 
 app.listen(port, () => {
