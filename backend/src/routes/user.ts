@@ -1,35 +1,57 @@
 import express from 'express'
-import {account} from '../database/account'
+import path from 'path';
+import fs from 'fs';
 
 const app = express.Router();
 
 
-app.get('/', (req, res)=>{
-    res.json({message: "Hello from user"})
+interface Account {
+    username: string;
+    password: string;
+}
+
+const dataPath = path.join(__dirname, 'userAccount.json');
+
+const saveData = (data: Account[]): void => {
+    fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
+};
+
+const getData = (): Account[] => {
+    if (fs.existsSync(dataPath)) {
+        return JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+    }
+    return [];
+};
+
+
+app.get('/', (req, res) => {
+    res.json({ message: "Hello from user" })
 })
 
-app.post('/login', async (req,res)=>{
-    const {name, password} = req.body;
-    const value =  account.find((e) => (e.Fname === name) && (e.password === password))? true: false;
-    console.log(value)
 
-    if(!name || ! password){
-        return res.status(400).json({message: "please complete the form!"})
+app.post('/login', async (req, res) => {
+    const { name, password } = req.body;
+    if (!name || !password) {
+        return res.status(400).json({ message: "please complete the form!" })
     }
 
-    if(value){
-        return res.status(200).json({name: "Hello, "+ name})
-    }else{
-        return res.status(404).json({message: "user not found!"})
-    }
+    const newUser: Account = { username: name, password: password };
+    const user = getData();
+    user.push(newUser)
+    saveData(user)
+
+    return res.status(200).json({message: "successfully!"})
+
 })
 
-app.post('/auth', (req,res)=>{
-    const {name} = req.body;
-    const data = account.find((e)=> e.Fname === name)
-    console.log(data)
-    return res.json(data)
+
+
+app.get('/read', async (req,res)=>{
+    const data = getData();
+
+    return res.status(200).json(data)
 })
+
 
 
 export default app

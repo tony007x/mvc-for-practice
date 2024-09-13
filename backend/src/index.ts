@@ -1,5 +1,4 @@
 import express from 'express';
-import { Request, Response } from 'express';
 import userAPI from './routes/user';
 
 const app = express();
